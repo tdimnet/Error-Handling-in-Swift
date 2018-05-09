@@ -43,16 +43,6 @@ func lend() throws {
  In this task, change the catch statement to include specific error cases. Like before you can just log an error message of your choosing.
  */
 
-//do {
-//    let myFriend = try friend(from: response)
-//    send(message: "Hello", to: myFriend)
-//} catch FriendError.invalidData(let description) {
-//    // Inform the user that they passed in invalidData
-//    print(description)
-//} catch FriendError.someError {
-//    // Do something else but do not inform the user
-//}
-
 enum ParserError: Error {
     case emptyDictionary
     case invalidKey
