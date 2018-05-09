@@ -6,6 +6,7 @@ struct Friend {
 
 enum FriendError: Error {
     case invalidData(description: String)
+    case someError
 }
 
 func friend(from dict: [String: String]) throws -> Friend {
@@ -22,7 +23,18 @@ func friend(from dict: [String: String]) throws -> Friend {
     return Friend(name: name, age: age, address: address)
 }
 
-let response = ["name": "Thomas", "age": "29", "address": "someAddress"]
-let someFriend = try friend(from: response)
+func send(message: String, to friend: Friend) {
+    print(message)
+}
 
-print(someFriend)
+let response = ["name": "Thomas", "age": "29", "address": "someAddress"]
+
+do {
+    let myFriend = try friend(from: response)
+    send(message: "Hello", to: myFriend)
+} catch FriendError.invalidData(let description) {
+    // Inform the user that they passed in invalidData
+    print(description)
+} catch FriendError.someError {
+    // Do something else but do not inform the user
+}
