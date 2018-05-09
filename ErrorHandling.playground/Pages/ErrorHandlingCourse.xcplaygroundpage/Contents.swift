@@ -5,13 +5,24 @@ struct Friend {
 }
 
 enum FriendError: Error {
-    case invalidData
+    case invalidData(description: String)
 }
 
-func friend(from dict: [String: String]) -> Friend {
-    guard let name = dict["name"], let age = dict["age"] else { return nil }
+func friend(from dict: [String: String]) throws -> Friend {
+    guard let name = dict["name"] else {
+        throw FriendError.invalidData(description: "Invalid name value")
+    }
+    
+    guard let age = dict["age"] else {
+        throw FriendError.invalidData(description: "Invalid age value")
+    }
     
     let address = dict["address"]
     
     return Friend(name: name, age: age, address: address)
 }
+
+let response = ["name": "Thomas", "age": "29", "address": "someAddress"]
+let someFriend = try friend(from: response)
+
+print(someFriend)
